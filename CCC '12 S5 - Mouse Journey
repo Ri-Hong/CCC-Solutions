@@ -1,0 +1,48 @@
+def findNPath(currentNode):
+  # print(currentNode)
+  global numPaths
+  global grid
+  global catCoord, nRows, nColumns
+
+  if currentNode == (nRows, nColumns):
+    numPaths += 1
+    return 1
+  
+  x = currentNode[0]
+  y = currentNode[1]
+
+  if grid[x][y] !=  -1:
+    # print("shortcut")
+    return grid[x][y]
+
+  sum = 0
+  if (x + 1, y) not in catCoord:
+    if x + 1 <= nRows:
+      sum += findNPath((x + 1, y))
+
+  if (x, y + 1) not in catCoord:
+    if y + 1 <= nColumns:
+      sum += findNPath((x, y + 1))
+
+  grid[x][y] = sum
+  # print(grid)
+  return sum
+
+###############################MAIN    :)))
+
+nRows, nColumns = list(map(int, input().split()))
+nRows -= 1
+nColumns -= 1
+catCoord = []
+
+grid = [[-1 for i in range(nColumns + 1)] for i in range(nRows + 1)]
+
+# int(input()) = num of cats
+numCats = int(input())
+for i in range(numCats):
+  x, y = input().split()
+  catCoord.append((int(x)-1, int(y) - 1))
+
+numPaths = 0
+
+print(findNPath((0, 0)))
