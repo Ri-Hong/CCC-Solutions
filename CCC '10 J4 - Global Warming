@@ -1,0 +1,40 @@
+def longestSeq(chain):
+
+  comparisonFragment = []
+  chainLen = len(chain)
+
+  for i in range(len(chain)):
+    wholeComparison = []
+    isValid = True
+    comparisonFragment.append(chain[i])
+    compLen = len(comparisonFragment)
+    wholeAddition = chainLen // compLen
+    partialAddition = chainLen % compLen
+    for rep in range(wholeAddition):
+      for xyz in comparisonFragment:
+        wholeComparison.append(xyz)
+
+    for element in range(partialAddition):
+      wholeComparison.append(comparisonFragment[element])
+
+    if wholeComparison == chain:
+      return i+1
+  return -1
+
+
+while True:
+  tempCycle = input()
+  if tempCycle == "0" or tempCycle == "0 ":
+    break
+  tempList = tempCycle.split()
+  tempList.pop(0)
+
+  tempList = list(map(int, tempList))
+  diffList = []
+  for i in range(1, len(tempList)):
+    diffList.append(tempList[i] - tempList[i-1])
+  x = longestSeq(diffList)
+  if x == -1:
+    print(0)
+  else:
+    print(x)
