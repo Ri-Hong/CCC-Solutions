@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int numCities, numRoads, numDestCities;
+
+//structure: from: (weight, to)
+array<vector<pair<int, int>>, 100001> graph;
+vector<int> destCities;
+array<bool, 10001> visited;
+array<int, 10001> shortestDist;
+
+int prims(){
+  priority_queue<pair<int, int>, vector<pair<int, int>>> pq;
+
+  int smallestPossibleWeight = 100000;
+  int currNode = 1;
+  visited[1] = true;
+  int count = 0;
+  while(count != destCities.size()){
+    visited[currNode] = true;
+
+    // cout << "cnode " << currNode << "\n";
+
+    for(pair<int, int> i : graph[currNode]){
+      pq.push(i);
+      // cout << "pushed: " << i.first  << ", " << i.second << "\n";
+    }
+
+    while(visited[pq.top().second]){
+      // cout << "cTop: " << pq.top().first << " " << pq.top().second << " " << pq.size() << "\n";
+      // cout << "visited List: ";
+      // for(int i = 0; i < 10; i++){
+      //   cout << i << " " << visited[i];
+      // }
+      // cout << "\n";
+      pq.pop();
+    }
+
+    // cout << currNode << " " << pq.top().first << " " << pq.top().second << "\n";
+
+
+    if(find(destCities.begin(), destCities.end(), pq.top().second) != destCities.end()){//if pq's top node is a destination city
+      count++;
+    }
+
+    currNode = pq.top().second;
+    if(pq.top().first < smallestPossibleWeight){
+      smallestPossibleWeight = pq.top().first;
+    }
+    pq.pop();
+  }
+  return smallestPossibleWeight;
+}
+
+
+
+int main() {
+  scanf("%d%d%d", &numCities, &numRoads, &numDestCities);
+  for(int i = 0; i < numRoads; i++){
+    int from, to, weight;
+    scanf("%d%d%d", &from, &to, &weight);
+    graph[from].push_back({weight, to});
+    graph[to].push_back({weight, from});
+  }
+  for(int i = 0; i < numDestCities; i++){
+    int destCity;
+    scanf("%d", &destCity);
+    destCities.push_back(destCity);
+  }
+  cout << prims() << "\n";
+}
