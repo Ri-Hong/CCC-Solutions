@@ -1,0 +1,117 @@
+import copy
+
+gFaveTeam = -1
+gGamesPlayed = -1
+gGames = {}
+staticScoreboard = {
+  "1" : 0,
+  "2" : 0,
+  "3" : 0,
+  "4" : 0
+}
+
+def getInput(fileOrInput):
+  global gFaveTeam
+  global gGamesPlayed
+
+  if fileOrInput == "Input":
+    gFaveTeam = input()
+    gGamesPlayed = int(input())
+    for i in range(gGamesPlayed):
+      scores = list(map(int,input().split()))
+      if scores[2] > scores[3]:
+        wOrL = "W"
+      elif scores[2] < scores[3]:
+        wOrL = "L"
+      elif scores[2] == scores[3]:
+        wOrL = "T"
+      a = "%s %s"%(scores[0], scores[1])
+      gGames[a] = wOrL
+
+  if fileOrInput == "File":
+    f = open("input.txt", "r")
+    gFaveTeam = f.readline()[0]
+    gGamesPlayed = int(f.readline())
+    for i in range(gGamesPlayed):
+      scores = list(map(int,f.readline().split()))
+      if scores[2] > scores[3]:
+        wOrL = "W"
+      elif scores[2] < scores[3]:
+        wOrL = "L"
+      elif scores[2] == scores[3]:
+        wOrL = "T"
+      a = "%s %s"%(scores[0], scores[1])
+      gGames[a] = wOrL
+
+nWinningPossibilities = 0
+
+def calculateScore():
+  dynamicScoreboard = copy.deepcopy(staticScoreboard)
+  equalCounter = 0
+  global unplayedGamesScores
+  global nWinningPossibilities
+  for i in unplayedGamesScores:
+    if unplayedGamesScores[i] == 'W':
+      dynamicScoreboard[i[0]] += 3
+    elif unplayedGamesScores[i] == 'L':
+      dynamicScoreboard[i[2]] += 3
+    elif unplayedGamesScores[i] == 'T':
+      dynamicScoreboard[i[0]] += 1
+      dynamicScoreboard[i[2]] += 1
+
+  # print("DS:", dynamicScoreboard)
+  for i in dynamicScoreboard:
+    if dynamicScoreboard[i] >= dynamicScoreboard[gFaveTeam]:
+      equalCounter += 1
+  if equalCounter == 1:
+    nWinningPossibilities += 1
+  # print("DS:", dynamicScoreboard)
+  # print (nWinningPossibilities)
+  # print("")
+
+
+WLT = ['W', 'L', 'T']
+def findPossibilities(currNode):
+  global unplayedGamesScores
+  global allGames
+
+  # print(currNode)
+  for i in WLT:
+    unplayedGamesScores[currNode] = i
+    if currNode == allGames[-1]:
+      # print("Exit")
+      # print(unplayedGamesScores)
+      # print(unplayedGamesScores)
+      calculateScore()
+    else:
+      findPossibilities(allGames[allGames.index(currNode)+1])
+
+#----------------main---------------------
+getInput("Input")
+# print(gGames)
+
+unplayedGamesScores = {}
+alreadyPlayed = []
+allGames = ["1 2","1 3","1 4","2 3","2 4","3 4"]
+for i in gGames:
+  if gGames[i] =='W':
+    staticScoreboard[i[0]] += 3
+  elif gGames[i] =='L':
+    staticScoreboard[i[2]] += 3
+  elif gGames[i] =='T':
+    staticScoreboard[i[0]] += 1
+    staticScoreboard[i[2]] += 1
+  alreadyPlayed.append(i)
+
+for i in alreadyPlayed:
+  allGames.remove(i)
+
+for i in allGames:
+  unplayedGamesScores[i] =  '_'
+
+# print(staticScoreboard)
+# print(unplayedGamesScores)
+# print(allGames)
+findPossibilities(allGames[0])
+
+print(nWinningPossibilities)
