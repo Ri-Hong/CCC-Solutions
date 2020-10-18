@@ -1,0 +1,237 @@
+#include <vector>
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int numEq;
+string num1;
+string num2;
+vector<char> num1Digits;
+vector<char> num2Digits;
+string state;
+
+string subtract(vector<char> num1Digits, vector<char> num2Digits){
+  // for(char o : num1Digits){
+  //   cout << o;
+  // }
+  // cout << endl;
+  // for(char e : num2Digits){
+  //   cout << e;
+  // }
+  // cout << endl;
+
+  vector<char> negativeNum;
+  vector<char> positiveNum;
+  vector<char> largerNum;
+  vector<char> smallerNum;
+  bool doCarry = false;
+  bool addNegative;
+  string ans;
+  string finalAns;
+  string tempSum;
+  int currDigit;
+  int digit1;
+  int digit2;
+  int numDigitsSmall;
+  int numDigitsBig;
+  int nowDigit;
+
+  if(num1Digits.back() == '-'){
+    num1Digits.pop_back();
+    negativeNum = num1Digits;
+    positiveNum = num2Digits;
+  }else{
+    num2Digits.pop_back();
+    negativeNum = num2Digits;
+    positiveNum = num1Digits;
+  }
+
+  //find longer vector
+  if(num1Digits.size() > num2Digits.size()){
+    numDigitsSmall = num2Digits.size();
+    numDigitsBig = num1Digits.size();
+    largerNum = num1Digits;
+    smallerNum = num2Digits;
+  }else if(num1Digits.size() < num2Digits.size()){
+    numDigitsSmall = num1Digits.size();
+    numDigitsBig = num2Digits.size();
+    largerNum = num2Digits;
+    smallerNum = num1Digits;
+  }else{
+    numDigitsSmall = num1Digits.size();
+    numDigitsBig = num1Digits.size();
+    for(int i = num1Digits.size(); i --> 0;){
+      if(num1Digits[i] > num2Digits[i]){
+        largerNum = num1Digits;
+        smallerNum = num2Digits;
+        break;
+      }else if(num1Digits[i] < num2Digits[i]){
+        largerNum = num2Digits;
+        smallerNum = num1Digits;
+        break;
+      }
+      if(i == 0){
+        return "0";
+      }
+    }
+  }
+
+
+  // return "TA";
+
+  if(largerNum == negativeNum){
+    addNegative = true;
+  }else{
+    addNegative = false;
+  }
+
+  for (int i = 0; i < numDigitsSmall; i++){
+    digit1 = largerNum[i] - '0';
+    digit2 = smallerNum[i] - '0';
+    if(doCarry){
+      digit1 -= 1;
+    }
+    doCarry = false;
+    if(digit2 > digit1){
+      doCarry = true;
+      digit1 += 10;
+    }
+    currDigit = digit1 - digit2;
+    // cout << digit1 << " - " << digit2 << " = " << currDigit << endl;
+    ans += to_string(currDigit);
+    // cout << doCarry << endl;
+  }
+
+  cout << endl;
+  for (int j = numDigitsSmall; j < numDigitsBig; j++){
+    if(doCarry){
+      nowDigit = largerNum[j] - '0' - 1;
+      if(nowDigit < 0){
+        nowDigit += 10;
+        doCarry = true;
+      }else{
+        doCarry = false;
+      }
+    }else{
+      nowDigit = largerNum[j] - '0';
+    }
+    tempSum += to_string(nowDigit);
+  }
+
+  if(tempSum.size() != 0){
+    ans += tempSum;
+  }
+
+  for(int m = ans.size(); m --> 0;){
+    if(ans[m] == '0'){
+      ans.erase(m);
+    }else{
+      break;
+    }
+  }
+
+  for(int k = ans.size(); k --> 0;){
+    finalAns += ans[k];
+  }
+
+  if(addNegative){
+    finalAns = '-' + finalAns;
+  }
+  return finalAns;
+}
+
+string add(vector<char> num1Digits, vector<char> num2Digits){
+  bool addNeg;
+  string sum;
+  string tempSum;
+  string finalAns;
+  vector<char> longerDigit;
+  int carry = 0;
+  int numDigitsSmall;
+  int numDigitsBig;
+  int currDigit;
+  int digit1;
+  int digit2;
+  int nowDigit;
+
+  //cover case of both negative
+  if(num1Digits.back() == '-' and num2Digits.back() == '-'){
+    num1Digits.pop_back();
+    num2Digits.pop_back();
+    addNeg = true;
+  }//both pos
+  else if(num1Digits.back() != '-' and num2Digits.back() != '-'){
+      addNeg = false;
+  }//one pos one neg
+  else{
+    return subtract(num1Digits, num2Digits);
+  }
+
+  if(num1Digits.size() >= num2Digits.size()){
+    numDigitsSmall = num2Digits.size();
+    numDigitsBig = num1Digits.size();
+    longerDigit = num1Digits;
+  }else{
+    numDigitsSmall = num1Digits.size();
+    numDigitsBig = num2Digits.size();
+    longerDigit = num2Digits;
+  }
+
+  for (int i = 0; i < numDigitsSmall; i ++){
+    digit1 = num1Digits[i] - '0';
+    digit2 = num2Digits[i] - '0';
+    currDigit = digit1 + digit2 + carry;
+    // cout << digit1 << " + " << digit2 << " + " << carry << " = " << currDigit << endl;
+    sum += to_string(currDigit % 10);
+    carry = floor(currDigit/ 10);
+    // cout << "carry" << carry << endl;
+  }
+
+  for (int j = numDigitsSmall; j < numDigitsBig; j++){
+    nowDigit = longerDigit[j] - '0' + carry;
+    if(nowDigit >= 10){
+      carry = floor(nowDigit/ 10);
+      nowDigit = nowDigit % 10;
+    }else{
+      carry = 0;
+    }
+    tempSum += to_string(nowDigit);
+  }
+
+  if(carry != 0){
+    tempSum += to_string(carry);
+  }
+
+  if(tempSum.size() != 0){
+    sum = sum + tempSum;
+  }
+
+  for(int k = sum.size(); k --> 0;){
+    finalAns += sum[k];
+  }
+
+  if(addNeg){
+    finalAns = '-' + finalAns;
+  }
+  return finalAns;
+}
+
+vector<string> output;
+int main(){
+  cin >> numEq;
+  for (int i = 0; i < numEq; i++){
+    num1Digits.clear();
+    num2Digits.clear();
+    cin >> num1 >> num2;
+    for(int j = num1.size(); j --> 0;){
+      num1Digits.push_back(num1[j]);
+    }
+    for(int k = num2.size(); k --> 0;){
+      num2Digits.push_back(num2[k]);
+    }
+    output.push_back(add(num1Digits, num2Digits));
+  }
+  for(string o : output){
+      cout << o << endl;
+  }
+}
