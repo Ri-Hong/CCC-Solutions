@@ -1,0 +1,47 @@
+#whoseTurn: 0 == Roland, 1 == Patrick
+
+def DFS(whoseTurn, particles):
+    
+    #Base DP:
+    #if in shortPaths, return it
+    if (whoseTurn, particles) in shortPaths.keys():
+        return shortPaths[(whoseTurn), particles]
+    
+    winner = None
+    oppTurn = abs(whoseTurn-1)
+    
+    #Recursion
+    for i in reactions:
+        nTup = (particles[0] - i[0], particles[1] - i[1], particles[2] - i[2], particles[3] - i[3])
+        
+        if min(nTup) >= 0:
+            res = DFS(oppTurn, nTup)
+        
+            if res == whoseTurn:
+                winner = whoseTurn
+                break
+    
+    if winner == None:
+        winner = oppTurn
+    
+    shortPaths[(whoseTurn, particles)] = winner
+    return winner
+
+
+reactions = ((2, 1, 0 ,2), (1, 1, 1, 1), (0, 0, 2, 1), (0, 3, 0, 0), (1, 0, 0, 1))
+testCases = int(input())
+
+for _ in range(testCases):
+    
+    #Format:
+    #{(whoseTurn, (particles)) : winner}
+    shortPaths = {}
+    
+    particles = tuple(map(int, input().split()))
+    
+    res = DFS(1, particles)
+    
+    if res == 1:
+        print ("Patrick")
+    else:
+        print ("Roland")
