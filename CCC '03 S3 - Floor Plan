@@ -1,0 +1,83 @@
+def printFloorPlan():
+  for i in floorPlan:
+    for j in i:
+      print(j, end = "")
+    print("")
+
+def findRoomSize(floorPlan, row, col, roomSize):
+  # printFloorPlan()
+  # print(roomSize, "^")
+  if floorPlan[row-1][col] == "I" and floorPlan[row][col+1] == "I" and floorPlan[row+1][col] == "I" and floorPlan[row][col-1] == "I":
+    floorPlan[row][col] = 'I'
+    return roomSize
+
+  if floorPlan[row][col + 1] == '.':
+    floorPlan[row][col] = "I"
+    roomSize = findRoomSize(floorPlan, row, col + 1, roomSize + 1)
+  if floorPlan[row + 1][col] == '.':
+    floorPlan[row][col] = "I"
+    roomSize = findRoomSize(floorPlan, row + 1, col, roomSize + 1)
+  if floorPlan[row][col - 1] == '.':
+    floorPlan[row][col] = "I"
+    roomSize = findRoomSize(floorPlan, row, col - 1, roomSize + 1)
+  if floorPlan[row - 1][col] == '.':
+    floorPlan[row][col] = "I"
+    roomSize = findRoomSize(floorPlan, row - 1, col, roomSize + 1)
+
+  return roomSize
+
+#--------------------main-------------------
+flooring = int(input())
+numRows = int(input())
+numCols = int(input())
+
+floorPlan = [['I']*(numCols+2)]
+
+for row in range(numRows):
+  c = ['I']
+  a = input()
+  for b in a:
+    c.append(b)
+  c.append('I')
+  floorPlan.append(c)
+
+floorPlan.append(['I']*(numCols+2))
+
+#for i in floorPlan:
+  #print(i)
+
+stop=0
+numRooms = 0
+roomSizeList = []
+for row in range(len(floorPlan)):
+  for col in range(len(floorPlan[row])):
+    if floorPlan[row][col] == '.':
+      numRooms += 1
+      floorPlan[row][col] == 'I'
+      roomSize = findRoomSize(floorPlan, row, col, 1)
+      roomSizeList.append(roomSize)
+      #printFloorPlan()
+      #print(roomSize)
+    #   stop = 1
+    #   break
+    # if stop==1:
+    #   break
+
+
+
+#print(roomSizeList)
+roomSizeList.sort(reverse = True)
+roomsCovered = 0
+for i in roomSizeList:
+  if i <= flooring:
+    flooring -= i
+    roomsCovered += 1
+  else:
+    break
+
+
+
+if roomsCovered == 1:
+  print("%d room, %d square metre(s) left over"%(roomsCovered, flooring))
+else:
+  print("%d rooms, %d square metre(s) left over"%(roomsCovered, flooring))
