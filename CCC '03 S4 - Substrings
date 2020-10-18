@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+vector<string>* createSortedSuffixArray(string targetString){
+  //create a vector to store suffixes
+  vector<string>* suffixArray_ptr = new vector<string>;
+
+  //fill vector with suffixes
+  for(int i = 0; i < targetString.length(); i++){
+    suffixArray_ptr->push_back(targetString.substr(i, targetString.length() - i));
+  }
+
+  //sort the suffixes lexicographically
+  sort(suffixArray_ptr->begin(), suffixArray_ptr->end());
+
+  //return the sorted vector
+  return suffixArray_ptr;
+}
+
+int lcp(string previousElement, string currElement){
+  int lcpLength = 0;
+  int shorterLength = previousElement.length() > currElement.length() ? currElement.length() : previousElement.length();
+
+  for(int i = 0; i < shorterLength; i++){
+    if(previousElement[i] == currElement[i]){
+      lcpLength++;
+    }
+    else{
+      break;
+    }
+  }
+  return lcpLength;
+}
+
+int findDistinctSubstrings(vector<string> suffixArray){
+  int count = 0;
+  //iterate through the array and compare it with the previous element using lcp(longest common prefix)
+  for(int i = 1; i < suffixArray.size(); i++){
+    // cout << suffixArray[i].length() << "-" << lcp(suffixArray[i-1], suffixArray[i]) << endl;
+
+    count += suffixArray[i].length() - lcp(suffixArray[i-1], suffixArray[i]);
+  }
+  //add occurance of the first substring and the occurance of the empty substring
+  count += suffixArray[0].length() + 1;
+  return count;
+}
+
+int main() {
+  //Get input
+  int nTestCases;
+  string currentStr;
+  cin >> nTestCases;
+
+  for(int i = 0; i < nTestCases; i++){
+    cin >> currentStr;
+    //create a sorted array of suffixes
+    vector<string>* pSuffixArray = createSortedSuffixArray(currentStr);
+
+    //find number of distince substrings
+    cout << findDistinctSubstrings(*pSuffixArray) << endl;
+
+    //delete pointer to save memory
+    delete pSuffixArray;
+  }
+
+
+}
