@@ -1,3 +1,7 @@
+'''
+Author: Ri Hong
+Date AC'd: April 30, 2020
+'''
 #Explanation
 '''
 Basiclly, this question is asking you to find the maximum distance between two elements of two lists

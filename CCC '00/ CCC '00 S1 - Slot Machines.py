@@ -1,3 +1,7 @@
+'''
+Author: Ri Hong
+Date AC'd: Jan. 28, 2020
+'''
 #Explanation
 '''
 First we get the amount of quarters Martha starts with and the number of times each machine has been played since it last paid.

@@ -1,3 +1,7 @@
+'''
+Author: Ri Hong
+Date AC'd: March 4, 2020
+'''
 #Explanation
 '''
 For each number, we want to loop through all the numbers from 1 to the number/2 to get a list of its proper divisors

@@ -1,3 +1,7 @@
+'''
+Author: Ri Hong
+Date AC'd: March 27, 2020
+'''
 #Explanation
 '''
 We have to replace all 4 letter words with "****". We can acomplish this by splitting each sentence by spaces

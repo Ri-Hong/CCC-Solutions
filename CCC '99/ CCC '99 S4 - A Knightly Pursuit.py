@@ -1,3 +1,7 @@
+'''
+Author: Ri Hong
+Date AC'd: June 27, 2020
+'''
 #Explanation
 '''
 This problem has two quirks we need to look out for before we even start solving the problem. 

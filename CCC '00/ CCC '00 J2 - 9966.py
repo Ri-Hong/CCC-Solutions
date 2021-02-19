@@ -1,3 +1,7 @@
+'''
+Author: Ri Hong
+Date AC'd: Jan. 4, 2020
+'''
 #Explanation
 '''
 *Note 9966able means being able to look the same after being flipped upside down
