@@ -59,3 +59,4 @@ while True: #loop through each join/split event
 #print out all the streams in their final form. Remember to print each value rounded to the nearest integer
 for i in range(len(streams)):
   print(round(streams[i]), end = " " )
+  
