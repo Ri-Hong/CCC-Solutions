@@ -80,3 +80,4 @@ if roomsCovered == 1: #if there is only one room covered, don't print an s on th
   print("{} room, {} square metre(s) left over".format(roomsCovered, availableFlooring))
 else:
   print("{} rooms, {} square metre(s) left over".format(roomsCovered, availableFlooring))
+  
