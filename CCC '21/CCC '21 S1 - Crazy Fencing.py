@@ -17,7 +17,7 @@ heights = list(map(int, input().split())) #gets the heights as a string, splits 
 widths = list(map(int, input().split())) #gets the widths as a string, splits it into a list, and casts each value into an integer
 
 area = 0 #stores the area of the entire fence
-for i in range(len(widths): #loop through each of the widths by index
+for i in range(len(widths)): #loop through each of the widths by index
   area += widths[i] * (heights[i] + heights[i+1])/2 #calculate area of each piece of wood. A = w * (h1 + h2)/2
 
 print(area) #print the final area
