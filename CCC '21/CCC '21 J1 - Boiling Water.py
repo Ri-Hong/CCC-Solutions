@@ -16,14 +16,14 @@ Meaning, if atmospheric pressure is 100, then we are at sea level. If atmospheri
 above 100, we are below sea level
 '''
 #Code
-boilingPoint = int(input())
+boilingPoint = int(input()) #get the boiling point of water as an integer
 
-atmosphericPressure = 5 * boilingPoint - 400
+atmosphericPressure = 5 * boilingPoint - 400 #calculate atmospheric pressure
 
-print(atmosphericPressure)
-if atmosphericPressure == 100:
+print(atmosphericPressure) #print out atmospheric pressure
+if atmosphericPressure == 100: #if atmospheric pressure is 100, we are at sea level
   print(0)
-elif atmosphericPressure < 100:
+elif atmosphericPressure < 100: #if atmospheric pressure is below 100, we are above sea level
   print(1)
-else:
+else: #if atmospheric pressure is above 100, we are below sea level
   print(-1)
