@@ -8,10 +8,12 @@ Problem: https://dmoj.ca/problem/ccc21s2
 /*
 Instead of storing all the 'cells' in a 5000000 by 5000000 2D array, We can just store how many times each row/column is painted using 2 x 5000000 arrays.
 Then we loop through those two arrays and mod each value by 2 since painting a single row/col once is equivalent to painting it three times, 5 times, 7 times, etc.
+
 We can observe that a square will olny become golden if either: the row is painted and the column isn't OR the row is not painted and the column is. (If row and 
-column are painted or row and column are both not painted, then the square will remain black) This is similar to the exclusive or operator. So we can go through the
-2 arrays and count how many rows are painted and how many columns are painted. We can also get the number of unpainted rows/columns. Now to find the number of squares,
-we can do rowsUnpainted * columnsPainted + rowsPainted * columnsUnpainted.
+column are painted or row and column are both not painted, then the square will remain black) This is similar to the exclusive or operator. 
+
+So we can go through the 2 arrays and count how many rows are painted and how many columns are painted. We can also get the number of unpainted rows/columns. 
+Now to find the number of squares, we can do rowsUnpainted * columnsPainted + rowsPainted * columnsUnpainted.
 */
 
 #include <iostream>
