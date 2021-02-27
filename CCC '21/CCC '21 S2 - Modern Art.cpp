@@ -1,6 +1,6 @@
 /*
 Author: Ri Hong
-Date AC'd: Feb 17, 2020
+Date AC'd: Feb 17, 2021
 Problem: https://dmoj.ca/problem/ccc21s2
 */
 
