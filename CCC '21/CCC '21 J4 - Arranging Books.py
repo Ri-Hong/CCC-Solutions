@@ -8,7 +8,7 @@ Problem: https://dmoj.ca/problem/ccc21j4
 '''
 Step 1
 First, we have to split the bookshelf into three sections: the large, medium and small section, where the size of each section is the number of books of that size in the bookshelf.
-For example, if the bookshelf order initially was LLLSSM MLLS MLSM, then 
+For example, if the bookshelf order initially was LLLSSMMLLSMLSM, then 
 largeSection = [L, L, L, S, S, M] (since there are 6 large books)
 mediumSection = [M, L, L, S] (since there are 4 medium books)
 smallSection = [M, L, S, M] (since there are 4 small books)
