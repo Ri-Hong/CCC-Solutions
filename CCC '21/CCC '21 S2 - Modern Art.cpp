@@ -17,6 +17,7 @@ column are painted or row and column are both not painted, then the square will 
 Thus, the formula for the number of gold squares is: rowsUnpainted * columnsPainted + rowsPainted * columnsUnpainted.
 */
 
+//Code
 #include <iostream>
 #include <array>
 using namespace std;
@@ -25,8 +26,8 @@ int height, width, nChoices;
 char instruction; //stores whether the "choice" is a 'R' or 'C'
 int rcIndex; //stores the index corresponding to the choice
 int numGoldSquares = 0; //stores the number of gold squares
-int nRowTrues, nColTrues = 0; //stores how many rows and cols are painted 
-int nRowFalses, nColFalses; //stores how many rows and cols are NOT painted 
+int nRowPainted, nColPainted = 0; //stores how many rows and cols are painted 
+int nRowUnpainted, nColUnpainted; //stores how many rows and cols are NOT painted 
 array<bool, 5000000> rowState = {0}; //stores the number of times each row has been painted
 array<bool, 5000000> colState = {0}; //stores the number of times each column has been painted
 
@@ -44,21 +45,21 @@ int main() {
 
     if(instruction == 'R'){
       rowState[rcIndex] = !rowState[rcIndex]; //"flip" the row. If it is currently a 1, make it 0 and vice versa
-      nRowTrues += rowState[rcIndex]*2 - 1; //if the new state is true/gold, then we add one to the counter, if it's false/black, we subtract one from the counter
+      nRowPainted += rowState[rcIndex]*2 - 1; //if the new state is true/gold, then we add one to the counter, if it's false/black, we subtract one from the counter
     }
     else if(instruction == 'C'){
       colState[rcIndex] = !colState[rcIndex]; //"flip" the row. If it is currently a 1, make it 0 and vice versa
-      nColTrues += colState[rcIndex]*2 - 1; //if the new state is true/gold, then we add one to the counter, if it's false/black, we subtract one from the counter
+      nColPainted += colState[rcIndex]*2 - 1; //if the new state is true/gold, then we add one to the counter, if it's false/black, we subtract one from the counter
     }
   }
 
-  //calculate nRowFalses and nRowTrues
-  nRowFalses = height - nRowTrues;  
-  nColFalses = width - nColTrues;
+  //calculate nRowUnpainted and nColUnpainted
+  nRowUnpainted = height - nRowPainted;  
+  nColUnpainted = width - nColPainted;
 
   //calculate number of gold squares
-  numGoldSquares += nRowTrues * nColFalses;
-  numGoldSquares += nColTrues * nRowFalses;
+  numGoldSquares += nRowPainted * nColUnpainted;
+  numGoldSquares += nColPainted * nRowUnpainted;
 
   //output
   printf("%d", numGoldSquares);
