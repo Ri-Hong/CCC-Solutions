@@ -6,6 +6,8 @@ Problem: https://dmoj.ca/problem/ccc21s3
 
 #Explanation
 '''
+***Note that this solution only ACs when Pypy 3 is selected as the language on DMOJ instead of Python 3
+
 SUBTASK 1
 For the first subtask, we can use linear search to find our answer.
 Step 1
