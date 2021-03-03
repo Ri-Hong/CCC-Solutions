@@ -11,6 +11,7 @@ weight that can be driven through the destination cities. We build the tree one 
 There are several MST algorithms like Prim's or Kruskal's. I chose Prim's but Kruskal's should work too. Feel free to research about MST algorithms if you are unsure about them.
 */
 
+//Code
 #include <bits/stdc++.h> //include all libraries
 using namespace std;
 
