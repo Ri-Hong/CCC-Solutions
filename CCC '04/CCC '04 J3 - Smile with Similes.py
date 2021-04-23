@@ -1,7 +1,7 @@
 '''
 Author: Ri Hong
 Date AC'd: Feb 1, 2020
-Problem: https://dmoj.ca/problem/ccc04j2
+Problem: https://dmoj.ca/problem/ccc04j3
 '''
 
 #Explanation
