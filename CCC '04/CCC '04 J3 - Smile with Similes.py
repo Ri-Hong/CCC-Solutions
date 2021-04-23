@@ -9,7 +9,7 @@ Problem: https://dmoj.ca/problem/ccc04j2
 Get each adjective and store them in an adjective list
 Get each noun and store them in an noun list
 
-Loop through each element of the adjective lis. For each element of the adjective list, loop through all the elements of the 
+Loop through each element of the adjective list. For each element of the adjective list, loop through all the elements of the 
 noun list and print each combination of adjective and noun.
 '''
 
